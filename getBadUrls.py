@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import urllib2, random
+import urllib2, random, re
 
 
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
@@ -11,21 +11,23 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML,
 
 f = open("/usr/share/dict/words", "r")
 myUrl = "https://www.google.com/search?q="
-writeFile = open("badUrls.txt", "w")
+writeFile = open("badUrls2.txt", "w")
 urlCounter = 0
 
 text = f.read().split('\n')
 text = [a for a in text if len(a) > 5]
-while urlCounter < 1000:
-	num = int(random.random() * len(text))
-	word = text[num]
-	del text[num]
-	urlCounter += 1
-	tempUrl = myUrl + word
-	req = urllib2.Request(url=tempUrl,headers=hdr)
-	site = urllib2.urlopen(req)
-	soup = BeautifulSoup(site.read())
-	output = str(soup.find_all('h3', {'class': 'r'})[1].a['href'])
-	print urlCounter, output
-	writeFile.write(output +'\n')
-
+while urlCounter < 5000:
+	try:
+		num = int(random.random() * len(text))
+		word = text[num]
+		del text[num]
+		tempUrl = myUrl + word
+		req = urllib2.Request(url=tempUrl,headers=hdr)
+		site = urllib2.urlopen(req)
+		soup = BeautifulSoup(site.read())
+		output = str(soup.find_all('h3', {'class': 'r'})[7].a['href'])
+		print urlCounter, output
+		writeFile.write(output +'\n')
+		urlCounter += 1
+	except (RuntimeError, TypeError, NameError):
+		pass
