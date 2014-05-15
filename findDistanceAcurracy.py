@@ -1,5 +1,6 @@
 import os, findDistance
 
+from findDistance import parse_doc
 distances = []
 num_pos = 0.0
 num_neg = 0.0

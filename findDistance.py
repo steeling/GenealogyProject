@@ -30,8 +30,8 @@ def parse_doc(doc):
 				distances.append(float(min_distance))
 	final_score = 0
 	for x in distances:
-		final_score += 1/x
-	return 1 if x > 1 else x
+		final_score += 1.0/x
+	return 1 if final_score > 1 else final_score
 
 def calc_same_tag_distance(p_elem, p_word):
 	counter = 0
