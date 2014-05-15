@@ -7,7 +7,7 @@ num_neutral = 0.0
 for filename in os.listdir(os.getcwd()):
 	f = open(filename, "r")
 	text = f.read()
-	dist = findDistance.parse_doc(text)
+	dist = parse_doc(text)
 	if dist < .5:
 		num_neg += 1
 	if dist > .5:
