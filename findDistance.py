@@ -3,12 +3,10 @@
 from bs4 import BeautifulSoup
 import re
 
-primary_words = ["Birth"]
+primary_words = ["spouses", "parents" "Birth","Death", "married", "died", "born", "sibling", "Marriage", "Brother", "sister", "father", "mother", "niece", "nephew", "grandfather", "cousin", "grandmother", "aunt", "uncle"]
 def parse_doc(doc):
 	distances = []			#[(primary_word, secondary, distance), ]
-
 	soup = BeautifulSoup(doc.lower())
-	
 	for p_word in primary_words:	
 		p_word = p_word.lower()							#grab each hotword
 		for p_elem in soup(text=re.compile(p_word)): 			#grab each occurrence of the hot word
@@ -32,8 +30,11 @@ def parse_doc(doc):
 					min_s_word = s_elem
 					s_tag = s_elem.parent.name
 			if min_distance != -1:
-				distances.append((p_word,min_s_word,min_distance,p_tag,s_tag))	
-	return distances		
+				distances.append(float(min_distance)	
+	final_score = 0
+	for x in distances:
+		final_score += 1/x
+	return 1 if x > 1 else x
 
 def calc_same_tag_distance(p_elem, s_elem, p_word, s_word):
 	counter = 0
