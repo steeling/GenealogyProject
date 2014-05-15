@@ -8,8 +8,9 @@ num_neutral = 0.0
 for filename in os.listdir(os.getcwd()):
 	f = open(filename, "r")
 	text = f.read()
-	print filename
 	dist = parse_doc(text)
+	print filename
+	print dist
 	if dist < .5:
 		num_neg += 1
 	if dist > .5:
